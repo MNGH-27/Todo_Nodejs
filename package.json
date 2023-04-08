@@ -8,13 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/MNGH-27/todoApp-with-backend-_-Node-js-.git"
+    "url": "git+https://github.com/MNGH-27/Todo_Nodejs_Remixjs.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/MNGH-27/todoApp-with-backend-_-Node-js-/issues"
+    "url": "https://github.com/MNGH-27/Todo_Nodejs_Remixjs/issues"
   },
-  "homepage": "https://github.com/MNGH-27/todoApp-with-backend-_-Node-js-#readme"
+  "homepage": "https://github.com/MNGH-27/Todo_Nodejs_Remixjs#readme"
 }
