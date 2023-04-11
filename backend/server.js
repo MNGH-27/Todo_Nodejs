@@ -1,24 +1,23 @@
 require("dotenv").config();
 
-const express = require("express");
-const app = express();
+const http = require("http");
 
-//middleware
-app.use(express.json()); //parse json bodies in the request object
+//import app from app.js file
+const app = require("./app");
 
-//redirect request to endpoint statrting with /posts to postRoutes.js
-// app.use("/post",require("./"))
+const PORT = process.env.PORT || 5000;
 
-//Global Error Handler, IMPORTANT function params MUST start with err
-app.use((err, req, res, next) => {
-  console.log(err.stack);
-  console.log(err.name);
-  console.log(err.code);
+//use app.js file to create Server
+const server = http.createServer(app);
 
-  res.status(500).json({
-    message: "Somthing went wrong",
+//start server with app.js
+async function startServer() {
+  server.listen(PORT, () => {
+    console.log(`listening to port : ${PORT}`);
   });
-});
+}
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server listening to port : ${PORT}`));
+//start server . . .
+startServer();
+
+//..........

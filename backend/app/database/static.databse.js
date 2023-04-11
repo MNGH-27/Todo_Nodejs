@@ -1,0 +1,9 @@
+/**
+ * {
+ *  id:
+ *  name:
+ *  password:
+ * }
+ */
+
+users = {};
