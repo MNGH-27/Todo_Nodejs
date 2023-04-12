@@ -1,9 +1,0 @@
-/**
- * {
- *  id:
- *  name:
- *  password:
- * }
- */
-
-users = {};
