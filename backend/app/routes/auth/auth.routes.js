@@ -9,6 +9,6 @@ const authRouter = express.Router();
 //@routes POST /auth/login
 authRouter.post("/login", authController.LoginUser);
 
-authRouter.post("/signup");
+authRouter.post("/signup", authController.CreateUser);
 
 module.exports = authRouter;

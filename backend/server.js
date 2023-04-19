@@ -2,8 +2,6 @@ require("dotenv").config();
 
 const http = require("http");
 
-// require("./app/database/mysql.database");
-
 //import app from app.js file
 const app = require("./app");
 

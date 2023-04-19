@@ -1,26 +1,26 @@
 const db = require("./../database/mysql.database");
 class User {
-  constructor(firstName, lastName) {
+  //add values to constructor
+  constructor(firstName, lastName, password, email) {
     this.firstName = firstName;
     this.lastName = lastName;
+    this.password = password;
+    this.email = email;
   }
 
   async save() {
-    // const date = new Date();
-    // // const createdAt = `${date.getFullYear()}-${
-    // //   date.getMonth() + 1
-    // // }-${date.getDay()}`;
-
     const sql = `
      INSERT INTO user (
         firstName,
         lastName,
-        password
+        password,
+        email
      )
      VALUES(
         "${this.firstName}",
         "${this.lastName}",
-        123
+        "${this.password}",
+        "${this.email}"
      )
     `;
 

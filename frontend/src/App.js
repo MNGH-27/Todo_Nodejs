@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from "react";
 
-function App() {
+//react-router-dom
+import { Route, Routes, useLocation } from "react-router-dom";
+
+import Layout from "./components/common/layout";
+
+//component
+import Auth from "./page/auth";
+
+export default function App() {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    //redirect to top
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [pathname]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <Routes>
+        <Route element={<Auth />} path="/" />
+        <Route element={<Layout />}></Route>
+      </Routes>
+    </>
   );
 }
-
-export default App;
