@@ -13,3 +13,12 @@ export async function CreateNewuser({ email, firstName, lastName, password }) {
 
   return apiCall;
 }
+
+export async function LoginUser({ email, password }) {
+  const apiCall = await useFetch().post(`${endPoint}/login`, {
+    email,
+    password,
+  });
+
+  return apiCall;
+}
