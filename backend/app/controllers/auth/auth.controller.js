@@ -54,11 +54,17 @@ async function CreateUser(req, res) {
     value.email
   );
 
-  console.log("this is user", newUser);
-
-  console.log("resualt : ", await newUser.save());
-
-  res.send({ value });
+  // //save data in sql
+  // newUser.save(newUser, (err, data) => {
+  //   //check if have error in saving data
+  //   if (err)
+  //     //return status with 500 for sqlServer error
+  //     return res.status(500).send({
+  //       message:
+  //         err.message || "Some error occurred while creating the Tutorial.",
+  //     });
+  //   else return res.send(data);
+  // });
 }
 
 module.exports = {
