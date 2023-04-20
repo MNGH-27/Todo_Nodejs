@@ -8,44 +8,65 @@ class User {
     this.email = email;
   }
 
-  async save(newUser, result) {
-    db.query("INSERT INTO user SET ?", newUser, (err, res) => {
-      //check if error in saving data in mySql
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
+  async save(newUser) {
+    return new Promise((resolve, reject) => {
+      db.query("INSERT INTO user SET ?", newUser, (err, res) => {
+        //check if error in saving data in mySql
+        if (err) {
+          console.log("error: ", err);
+          return reject(err);
+        }
 
-      //there is no any error in saving data in mySql
-      console.log("created tutorial: ", { id: res.insertId, ...newUser });
-      result(null, { id: res.insertId, ...newUser });
+        //there is no any error in saving data in mySql
+        console.log("created tutorial: ", { id: res.insertId, ...newUser });
+        resolve({ id: res.insertId, ...newUser });
+      });
     });
   }
 
-  async findAll(result) {
-    db.query("SELECT * FROM user", (err, res) => {
-      //check if error in saving data in mySql
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
-        return;
-      }
-
-      console.log("list of users :", res);
-      result(null, { res });
+  async findAll() {
+    return new Promise((resolve, reject) => {
+      db.query("SELECT * FROM user", (err, res) => {
+        //check if error in saving data in mySql
+        if (err) {
+          console.log("error: ", err);
+          return reject(err);
+        }
+        //return data as resolve
+        resolve({ res });
+      });
     });
   }
 
-  async findUserWithEmail(email, result) {
-    db.query("SELECT * FROM user WHERE email = ? ", email, (err, res) => {
-      if (err) {
-        console.log("error : ", err);
-        return result(err, null);
-      }
+  async findUserWithEmail(email) {
+    return new Promise((resolve, reject) => {
+      db.query("SELECT * FROM user WHERE email = ? ", email, (err, res) => {
+        if (err) {
+          console.log("error : ", err);
+          return reject(err);
+        }
 
-      console.log("list of user : ", res);
-      return result(null, res);
+        return resolve(res);
+      });
+    });
+  }
+
+  static loginUser(email, password) {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "SELECT * FROM user WHERE email = ? & password = ?",
+        [email, password],
+        (err, res) => {
+          //there was error in login
+          if (err) {
+            console.log("err in login user :=> ", err);
+            return reject(err);
+          }
+
+          //login user successfully
+          return resolve(res);
+        }
+      );
     });
   }
 }
