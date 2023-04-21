@@ -1,5 +1,14 @@
 import React, { useState } from "react";
 
+//cookies
+import { useCookies } from "react-cookie";
+
+//react router dom
+import { Link, useNavigate } from "react-router-dom";
+
+//react toastify
+import { toast } from "react-toastify";
+
 //service
 import { LoginUser } from "../../../../service/auth";
 
@@ -8,9 +17,15 @@ import TodoInput from "./../../../../components/common/input";
 
 //SVG
 import { ReactComponent as Google } from "./../../../../assets/svg/google.svg";
-import { Link } from "react-router-dom";
 
 export default function Login() {
+  //cookies
+  const [cookies, setCookies] = useCookies();
+
+  //navigate
+  const navigate = useNavigate();
+
+  //data
   const [dataSchema, setDataSchema] = useState({
     password: "",
     email: "",
@@ -23,8 +38,24 @@ export default function Login() {
         email: dataSchema.email,
         password: dataSchema.password,
       });
+      //check response status
+      if (response.status === 201) {
+        //user login successfully
+        toast.success("با موفقیت وارد شدید");
+        //add token to cookies
+        setCookies("token", response.data.token);
 
-      console.log("this is response : ", response);
+        //navigate to dashboard
+        navigate("/dashboard");
+      } else {
+        //warn that we have error
+        toast.error("ورود ناموفق بود");
+
+        //add error to input elements
+        setError({
+          ...response.data.error,
+        });
+      }
     } catch (error) {
       console.log(error);
     }

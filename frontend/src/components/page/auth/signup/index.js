@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 
+//cookies
+import { useCookies } from "react-cookie";
+
 //react router dom
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 //service
 import { CreateNewuser } from "../../../../service/auth";
@@ -11,20 +14,46 @@ import TodoInput from "./../../../../components/common/input";
 
 //SVG
 import { ReactComponent as Google } from "./../../../../assets/svg/google.svg";
+import { toast } from "react-toastify";
 
 export default function Signup() {
+  //navigator
+  const navigate = useNavigate();
+
+  //cookies
+  const [cookies, setCookies] = useCookies();
+
+  //datas
   const [dataSchema, setDataSchema] = useState({
     firstName: "",
     lastName: "",
     password: "",
     email: "",
   });
+  const [error, setError] = useState({});
 
   const createNewUserHttp = async () => {
     try {
       const response = await CreateNewuser({ ...dataSchema });
 
-      console.log("response : ", response);
+      //check response status
+      if (response.status === 201) {
+        //user login successfully
+        toast.success("با موفقیت وارد شدید");
+        //add token to cookies
+        setCookies("token", response.data.token);
+
+        //navigate to dashboard
+        navigate("/dashboard");
+      } else {
+        //warn that we have error
+        toast.error("ورود ناموفق بود");
+
+        //add error to input elements
+        setError({
+          ...response.data.error,
+        });
+      }
     } catch (error) {
       console.log(error);
     }
@@ -44,6 +73,7 @@ export default function Signup() {
 
       <TodoInput
         value={dataSchema.firstName}
+        error={error.firstName}
         target="firstName"
         onDataHandler={onSetDataSchemaHandler}
         title="first name"
@@ -51,6 +81,7 @@ export default function Signup() {
       />
       <TodoInput
         value={dataSchema.lastName}
+        error={error.lastName}
         target="lastName"
         onDataHandler={onSetDataSchemaHandler}
         title="last name"
@@ -58,6 +89,7 @@ export default function Signup() {
       />
       <TodoInput
         value={dataSchema.email}
+        error={error.email}
         target="email"
         onDataHandler={onSetDataSchemaHandler}
         title="email"
@@ -65,6 +97,7 @@ export default function Signup() {
       />
       <TodoInput
         value={dataSchema.password}
+        error={error.password}
         target="password"
         onDataHandler={onSetDataSchemaHandler}
         title="password"
