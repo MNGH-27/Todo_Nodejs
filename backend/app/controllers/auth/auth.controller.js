@@ -58,7 +58,7 @@ async function LoginUser(req, res) {
         }
       );
 
-      return res.send({ ...loginUserResult[0], token });
+      return res.status(201).send({ ...loginUserResult[0], token });
     }
   } catch (error) {
     //there was error while saving and finding user , return error
