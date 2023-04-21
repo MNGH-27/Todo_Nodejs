@@ -6,15 +6,15 @@ const User = require("./../../models/user.model");
 async function LoginUser(req, res) {
   const userSchema = Joi.object({
     email: Joi.string().email().required().messages({
-      "string.base": `مقدار وارد شده باید رشته باشد`,
-      "string.empty": `ایمیل نمیتواند خالی باشد`,
-      "any.required": `مقدار ایمیل باید وارد شود`,
+      "string.base": `value must be string`,
+      "string.empty": `email can't be empty`,
+      "any.required": `email must be entered`,
     }),
     password: Joi.string().min(6).required().messages({
-      "string.base": `مقدار وارد شده باید رشته باشد`,
-      "string.empty": `رمز عبور نمیتواند خالی باشد`,
-      "string.min": `رمز عبور باید حداقل 6 رقم باشد`,
-      "any.required": `مقدار رمز عبور باید وارد شود`,
+      "string.base": `value must be string`,
+      "string.empty": `password can't be empty`,
+      "string.min": `Password must be at least 6 digits long`,
+      "any.required": `Password must be entered`,
     }),
   });
 
@@ -46,7 +46,7 @@ async function LoginUser(req, res) {
     //check if we have result in login
     if (loginUserResult.length === 0) {
       return res.status(400).send({
-        message: "کاربری با این اطلاعات پیدا نشده",
+        message: "there is no any user with this data",
       });
     } else {
       //create token for login
@@ -72,25 +72,25 @@ async function LoginUser(req, res) {
 async function CreateUser(req, res) {
   const userSchema = Joi.object({
     firstName: Joi.string().required().messages({
-      "string.base": `مقدار وارد شده باید رشته باشد`,
-      "string.empty": `نام نمیتواند خالی باشد`,
-      "any.required": `مقدار نام باید وارد شود`,
+      "string.base": `value must be string`,
+      "string.empty": `name can't be empty`,
+      "any.required": `name must be entered`,
     }),
     lastName: Joi.string().required().messages({
-      "string.base": `مقدار وارد شده باید رشته باشد`,
-      "string.empty": `نام خانوادگی نمیتواند خالی باشد`,
-      "any.required": `مقدار نام خانوادگی باید وارد شود`,
+      "string.base": `value must be string`,
+      "string.empty": `family can't be empty`,
+      "any.required": `family must be entered`,
     }),
     email: Joi.string().email().required().messages({
-      "string.base": `مقدار وارد شده باید رشته باشد`,
-      "string.empty": `ایمیل نمیتواند خالی باشد`,
-      "any.required": `مقدار ایمیل باید وارد شود`,
+      "string.base": `value must be string`,
+      "string.empty": `email can't be empty`,
+      "any.required": `email must be entered`,
     }),
     password: Joi.string().min(6).required().messages({
-      "string.base": `مقدار وارد شده باید رشته باشد`,
-      "string.empty": `رمز عبور نمیتواند خالی باشد`,
-      "string.min": `رمز عبور باید حداقل 6 رقم باشد`,
-      "any.required": `مقدار رمز عبور باید وارد شود`,
+      "string.base": `value must be string`,
+      "string.empty": `password can't be empty`,
+      "string.min": `Password must be at least 6 digits long`,
+      "any.required": `Password must be entered`,
     }),
   });
 
@@ -127,7 +127,7 @@ async function CreateUser(req, res) {
     if (userWithEmail.length !== 0) {
       //there is user with this email , return error
       return res.status(400).send({
-        message: "ایمیل داده شده قبلا ثبت شده",
+        message: "Duplicate Email Address",
       });
     }
     //there is no any user with this email , save user
