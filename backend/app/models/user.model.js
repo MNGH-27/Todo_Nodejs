@@ -51,10 +51,10 @@ class User {
     });
   }
 
-  static loginUser(email, password) {
+  async loginUser(email, password) {
     return new Promise((resolve, reject) => {
       db.query(
-        "SELECT * FROM user WHERE email = ? & password = ?",
+        "SELECT * FROM user WHERE email = ? AND password = ?",
         [email, password],
         (err, res) => {
           //there was error in login

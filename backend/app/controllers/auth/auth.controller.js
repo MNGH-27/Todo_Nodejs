@@ -37,8 +37,12 @@ async function LoginUser(req, res) {
   const loginUser = new User();
 
   try {
-    const loginUserResult = await loginUser(value.email, value.password);
+    const loginUserResult = await loginUser.loginUser(
+      value.email,
+      value.password
+    );
 
+    //check if we have result in login
     if (loginUserResult.length === 0) {
       return res.status(400).send({
         message: "کاربری با این اطلاعات پیدا نشده",
@@ -50,7 +54,7 @@ async function LoginUser(req, res) {
     //there was error while saving and finding user , return error
     return res.status(500).send({
       message:
-        err.message || "Some error occurred while creating the Tutorial.",
+        error.message || "Some error occurred while creating the Tutorial.",
     });
   }
 }
