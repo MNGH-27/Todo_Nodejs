@@ -1,5 +1,6 @@
 const Joi = require("joi");
-
+const jwt = require("jsonwebtoken");
+//model
 const User = require("./../../models/user.model");
 
 async function LoginUser(req, res) {
@@ -48,7 +49,16 @@ async function LoginUser(req, res) {
         message: "کاربری با این اطلاعات پیدا نشده",
       });
     } else {
-      return res.send({ ...loginUserResult });
+      //create token for login
+      const token = jwt.sign(
+        { id: loginUserResult.id },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1d",
+        }
+      );
+
+      return res.send({ ...loginUserResult[0], token });
     }
   } catch (error) {
     //there was error while saving and finding user , return error
@@ -120,11 +130,15 @@ async function CreateUser(req, res) {
         message: "ایمیل داده شده قبلا ثبت شده",
       });
     }
-
     //there is no any user with this email , save user
     const resultSaveUser = await newUser.save(newUser);
+
+    //create token for login
+    const token = jwt.sign({ id: resultSaveUser.id }, process.env.JWT_SECRET, {
+      expiresIn: "1d",
+    });
     //return save status and saved user data
-    return res.status(201).send({ ...resultSaveUser });
+    return res.status(201).send({ ...resultSaveUser, token });
   } catch (err) {
     //there was error while saving and finding user , return error
     return res.status(500).send({
