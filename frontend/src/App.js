@@ -8,7 +8,7 @@ import Layout from "./components/common/layout";
 //component
 import Auth from "./page/auth";
 
-//// inner component
+import Dashboard from "./page/dashboard";
 
 export default function App() {
   const { pathname } = useLocation();
@@ -21,9 +21,9 @@ export default function App() {
   return (
     <>
       <Routes>
-        <Route element={<Auth />} path="/" />
         <Route element={<Layout />}>
-          {/* <Route path="/dashboard" path /> */}
+          <Route element={<Auth />} path="/" />
+          <Route element={<Dashboard />} path="/dashboard" />
         </Route>
       </Routes>
     </>
