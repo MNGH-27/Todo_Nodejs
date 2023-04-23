@@ -69,6 +69,21 @@ class User {
       );
     });
   }
+
+  async GetUserWithId(id) {
+    return new Promise((resolve, reject) => {
+      db.query("SELECT * FROM user WHERE id = ?", [id], (err, res) => {
+        //there was error in login
+        if (err) {
+          console.log("err in login user :=> ", err);
+          return reject(err);
+        }
+
+        //login user successfully
+        return resolve(res);
+      });
+    });
+  }
 }
 
 module.exports = User;
