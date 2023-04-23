@@ -16,11 +16,11 @@ export default function Auth() {
   return (
     <div className="md:grid grid-cols-2 flex items-center justify-center min-h-screen">
       <img
-        className="h-screen md:relative absolute w-full -z-10 object-fill"
+        className="h-screen md:relative absolute w-full object-fill"
         src={AuthBanner}
         alt="banner"
       />
-      <div className="mx-5 sm:mx-auto flex flex-col items-start justify-center gap-y-1 w-full sm:w-3/4 md:w-[365px] bg-white p-3 rounded-xl shadow-md md:shadow-none">
+      <div className="relative z-10 mx-5 sm:mx-auto flex flex-col items-start justify-center gap-y-1 w-full sm:w-3/4 md:w-[365px] bg-white p-3 rounded-xl shadow-md md:shadow-none">
         {searchParams.get("status") === "signup" ? <Signup /> : <Login />}
       </div>
     </div>
