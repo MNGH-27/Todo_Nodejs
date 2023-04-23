@@ -1,0 +1,7 @@
+GET http://localhost:5000/v1/user
+
+HEAD {
+    Authorization: 
+}
+
+###
