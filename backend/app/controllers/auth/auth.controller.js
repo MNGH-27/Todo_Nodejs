@@ -51,7 +51,7 @@ async function LoginUser(req, res) {
     } else {
       //create token for login
       const token = jwt.sign(
-        { id: loginUserResult.id },
+        { id: loginUserResult[0].id },
         process.env.JWT_SECRET,
         {
           expiresIn: "1d",
