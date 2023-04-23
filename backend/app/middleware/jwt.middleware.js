@@ -1,15 +1,22 @@
+const jwt = require("jsonwebtoken");
+
 // JWT middleware function to verify the token
 const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization;
+  const token = req.headers.authorization.split(" ")[1].trim();
+
   if (!token) {
-    return res.status(401).json({ message: "توکن داده شده درست نیست" });
+    return res.status(401).json({ message: "token is wrong" });
   }
   try {
+    //decoding token which is sent
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    //there was no problem in decoding token => add to user in request
     req.user = decoded;
+    //go to next middle ware
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Invalid token" });
+    //there was error while decoding token => send status 403 as unAuthorized
+    return res.status(403).json({ message: "Invalid token" });
   }
 };
 
