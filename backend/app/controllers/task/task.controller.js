@@ -8,10 +8,10 @@ async function createNewTask(req, res) {
   const taskSchema = Joi.object({
     title: Joi.string().required().messages({
       "string.base": `value must be string`,
-      "string.empty": `email can't be empty`,
-      "any.required": `email must be entered`,
+      "string.empty": `title can't be empty`,
+      "any.required": `title must be entered`,
     }),
-    description: Joi.string(),
+    description: Joi.string().allow("").allow(null),
   });
 
   //validate sended values with Joi
