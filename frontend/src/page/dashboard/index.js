@@ -3,6 +3,9 @@ import React from "react";
 //redux
 import { useSelector } from "react-redux";
 
+//component
+import AddTask from "../../components/page/dashboard/addTask";
+
 //svg
 import { ReactComponent as SunSvg } from "./../../assets/svg/sun.svg";
 
@@ -31,13 +34,10 @@ export default function Dashboard() {
             <span className="text-5xl font-semibold">TO DO</span>
             <SunSvg />
           </div>
-          <div className="w-full shadow-xl bg-[#25273D] py-6 px-7 rounded-xl mb-8 flex items-center justify-start gap-2">
-            <i className="w-6 h-6 block rounded-full border border-[#767992]" />
-            <input
-              className="w-full text-xl bg-transparent outline-none placeholder:text-[#767992] text-white"
-              placeholder="Create a new todo ..."
-            />
-          </div>
+
+          {/* component to add task  */}
+          <AddTask />
+
           <div className="w-full shadow-xl bg-[#25273D] rounded-xl mb-8 ">
             <div className="flex items-center justify-start gap-2 px-7 py-6 border-b border-[#979797]/20">
               <span className="flex items-center justify-center bg-[#767992] w-6 h-6 rounded-full border border-[#767992]">
