@@ -2,6 +2,10 @@ const jwt = require("jsonwebtoken");
 
 // JWT middleware function to verify the token
 const verifyToken = (req, res, next) => {
+  if (!req.headers.authorization) {
+    return res.status(401).json({ message: "there is no any token" });
+  }
+
   const token = req.headers.authorization.split(" ")[1].trim();
 
   if (!token) {
