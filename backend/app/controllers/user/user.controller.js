@@ -22,10 +22,10 @@ async function GetUser(req, res) {
       //there is user with this data return user's data
 
       //fitler returned object and remove some field => [password]
-      const filterObject = filterObject(singleUser[0], ["password"], "remove");
+      const resultFilter = filterObject(singleUser[0], ["password"], "remove");
 
       //return data
-      return res.status(200).send({ ...filterObject });
+      return res.status(200).send({ ...resultFilter });
     }
   } catch (error) {
     //there was error while saving and finding user , return error
