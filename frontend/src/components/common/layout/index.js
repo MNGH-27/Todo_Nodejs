@@ -52,8 +52,6 @@ export default function Layout() {
     dispatch(stopLoading());
   };
 
-  console.log("this is uset : ", user);
-
   return (
     <div className="min-h-screen bg-[#171823]">
       <Outlet />
