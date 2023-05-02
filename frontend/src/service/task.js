@@ -19,3 +19,13 @@ export async function PostNewTask({ token, title, description }) {
 
   return apiCall;
 }
+
+export async function GetSingleUserTasks({ token }) {
+  const apiCall = await useFetch().get(`${endPoint}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return apiCall;
+}

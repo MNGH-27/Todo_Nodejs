@@ -1,38 +1,48 @@
 import React, { useState, useEffect } from "react";
 
+//cookies
+import { useCookies } from "react-cookie";
+
+//service
+import { GetSingleUserTasks } from "../../../../service/task";
+import { toast } from "react-toastify";
+
+//component
+import SingleTask from "../singleTask";
+
 const TaskList = () => {
+  const [cookies] = useCookies(["token"]);
+
+  const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    httpGetAllTaskOfUser();
+  }, []);
+
+  const httpGetAllTaskOfUser = async () => {
+    try {
+      const response = await GetSingleUserTasks({
+        token: cookies.token,
+      });
+
+      //check response status
+      if (response.status === 200) {
+        //get data successfully => add data to use state
+        setTasks([...response.data.data]);
+      } else {
+        //error in fetch data => show to user
+        toast.error("can't fetch data successfully");
+      }
+    } catch (error) {
+      console.log("error in get all task of user : ", error);
+    }
+  };
+
   return (
     <div className="bg-[#25273D] w-full rounded-t-md">
-      <div className="w-full flex items-center justify-start gap-2 px-7 py-6 border-b border-[#979797]/20">
-        <span className="flex items-center justify-center bg-[#767992] w-6 h-6 rounded-full border border-[#767992]">
-          <span className="text-white">&#10003;</span>
-        </span>
-        <span className="text-[#4D5067] text-xl line-through">
-          Complete online JavaScript course
-        </span>
-      </div>
-      <div className="w-full flex items-center justify-start gap-2 px-7 py-6 border-b border-[#979797]/20">
-        <i className="w-6 h-6 block rounded-full border border-[#767992]" />
-        <span className="text-[#C8CBE7] text-xl">Jog around the park 3x</span>
-      </div>
-      <div className="w-full flex items-center justify-start gap-2 px-7 py-6 border-b border-[#979797]/20">
-        <i className="w-6 h-6 block rounded-full border border-[#767992]" />
-        <span className="text-[#C8CBE7] text-xl">10 minutes meditation</span>
-      </div>
-      <div className="w-full flex items-center justify-start gap-2 px-7 py-6 border-b border-[#979797]/20">
-        <i className="w-6 h-6 block rounded-full border border-[#767992]" />
-        <span className="text-[#C8CBE7] text-xl">Read for 1 hour</span>
-      </div>
-      <div className="w-full flex items-center justify-start gap-2 px-7 py-6 border-b border-[#979797]/20">
-        <i className="w-6 h-6 block rounded-full border border-[#767992]" />
-        <span className="text-[#C8CBE7] text-xl">Pick up groceries</span>
-      </div>
-      <div className="w-full flex items-center justify-start gap-2 px-7 py-6 border-b border-[#979797]/20">
-        <i className="w-6 h-6 block rounded-full border border-[#767992]" />
-        <span className="text-[#C8CBE7] text-xl">
-          Complete Todo App on Frontend Mentor
-        </span>
-      </div>
+      {tasks.map((singleTask, index) => (
+        <SingleTask singleTask={singleTask} key={index} />
+      ))}
     </div>
   );
 };

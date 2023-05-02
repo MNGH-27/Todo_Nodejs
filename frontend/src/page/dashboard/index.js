@@ -34,10 +34,10 @@ export default function Dashboard() {
             <span className="text-5xl font-semibold">TO DO</span>
             <SunSvg />
           </div>
-
           {/* component to add task  */}
           <AddTask />
 
+          {/* component show all task of user */}
           <TaskList />
 
           <div className="w-full shadow-xl bg-[#25273D] rounded-b-xl mb-8 ">
