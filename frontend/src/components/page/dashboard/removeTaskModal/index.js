@@ -1,4 +1,46 @@
+import React from "react";
+
+//react router dom
+import { useNavigate } from "react-router-dom";
+
+//cookies
+import { useCookies } from "react-cookie";
+
+//service
+import { RemoveSingleUserTask } from "../../../../service/task";
+import { toast } from "react-toastify";
+
 const RemoveTaskModal = ({ data, closeModalHandler }) => {
+  const [cookies] = useCookies(["token"]);
+
+  //navigate
+  const navigate = useNavigate();
+
+  const httpRemoveSingleTask = async () => {
+    try {
+      const response = await RemoveSingleUserTask({
+        token: cookies.token,
+        id: data.id,
+      });
+
+      //get message of status
+      const { message } = response.data;
+
+      //check response status
+      if (response.status === 202) {
+        //reload page to show changed status
+        navigate(0);
+        //data saved successfully
+        // toast.success(message);
+      } else {
+        //remove task failed show why ?!!
+        toast.error(message);
+      }
+    } catch (error) {
+      console.log("there was error in remove task : ", error);
+    }
+  };
+
   return (
     <div
       onClick={closeModalHandler}
@@ -42,7 +84,10 @@ const RemoveTaskModal = ({ data, closeModalHandler }) => {
           </div>
         </div>
         <div className="flex items-center justify-between gap-3 mt-10">
-          <button className="bg-[#D21312] text-white border-2 border-[#D21312] hover:text-[#D21312] hover:bg-transparent duration-200 px-6 py-2 rounded-md font-medium">
+          <button
+            onClick={httpRemoveSingleTask}
+            className="bg-[#D21312] text-white border-2 border-[#D21312] hover:text-[#D21312] hover:bg-transparent duration-200 px-6 py-2 rounded-md font-medium"
+          >
             remove
           </button>
           <button

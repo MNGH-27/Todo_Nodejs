@@ -29,3 +29,13 @@ export async function GetSingleUserTasks({ token }) {
 
   return apiCall;
 }
+
+export async function RemoveSingleUserTask({ token, id }) {
+  const apiCall = await useFetch().delete(`${endPoint}/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return apiCall;
+}
