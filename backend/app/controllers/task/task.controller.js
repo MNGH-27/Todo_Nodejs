@@ -65,7 +65,7 @@ async function GetAllTaskOfUser(req, res) {
     //check result task
     const taskList = await task.getAllTaskOfUser(req.user.id);
 
-    //return result of add new task as response
+    //return result of get users task
     return res.status(201).send({ data: [...taskList] });
   } catch (error) {
     //there was error while saving and finding user , return error
