@@ -4,6 +4,9 @@ const Joi = require("joi");
 //models
 const Task = require("../../models/task.model");
 
+//helper
+const filterList = require("./../../helpers/fieldFilter.helper");
+
 async function createNewTask(req, res) {
   const taskSchema = Joi.object({
     title: Joi.string().required().messages({
@@ -65,8 +68,14 @@ async function GetAllTaskOfUser(req, res) {
     //check result task
     const taskList = await task.getAllTaskOfUser(req.user.id);
 
+    //filter list remove item => ("user_id")
+    const filteredTask = taskList.map((singleTask) => {
+      // map on each single object of array to remove selected item
+      return filterList(singleTask, ["user_id"], "remove");
+    });
+
     //return result of get users task
-    return res.status(201).send({ data: [...taskList] });
+    return res.status(200).send({ data: [...filteredTask] });
   } catch (error) {
     //there was error while saving and finding user , return error
     return res.status(500).send({
