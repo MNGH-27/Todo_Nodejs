@@ -48,7 +48,7 @@ const RemoveTaskModal = ({ data, closeModalHandler }) => {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className={`relative duration-500 bg-[#25273D] rounded-md p-6 mx-2 min-w-[450px]`}
+        className={`relative duration-500 bg-[#25273D] rounded-md p-6 mx-2 max-w-[450px]`}
       >
         <span className="text-[#F9F9F9] text-xl">
           Do you want to remove this task
