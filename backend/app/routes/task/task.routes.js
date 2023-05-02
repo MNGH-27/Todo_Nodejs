@@ -19,4 +19,6 @@ const taskRouter = express.Router();
 taskRouter.post("/", taskController.createNewTask);
 taskRouter.get("/", taskController.GetAllTaskOfUser);
 
+taskRouter.delete("/:id", taskController.RemoveSingleTask);
+
 module.exports = taskRouter;

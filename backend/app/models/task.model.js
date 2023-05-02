@@ -41,6 +41,26 @@ class Task {
       );
     });
   }
+
+  async removeSingleTaskOfUser(user_id, task_id) {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "DELETE FROM todo WHERE user_id = ? AND id = ? ",
+        [user_id, task_id],
+        (err, res) => {
+          //check if error while removing single task
+          if (err) {
+            console.log("error in delete task : ", err);
+            return reject(err);
+          }
+
+          //task deleted successfully
+          console.log("deleted task : ", { ...res });
+          resolve({ ...res });
+        }
+      );
+    });
+  }
 }
 
 module.exports = Task;

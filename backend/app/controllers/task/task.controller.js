@@ -77,7 +77,45 @@ async function GetAllTaskOfUser(req, res) {
     //return result of get users task
     return res.status(200).send({ data: [...filteredTask] });
   } catch (error) {
-    //there was error while saving and finding user , return error
+    //there was error while finding taks of user
+    return res.status(500).send({
+      message:
+        error.message || "Some error occurred while creating the Tutorial.",
+    });
+  }
+}
+
+async function RemoveSingleTask(req, res) {
+  const task = new Task();
+
+  const { id } = req.params;
+
+  //check if we have id as param
+  if (!id) {
+    //there is no param return error
+    return res.status(400).send({
+      message: "id of task must be sent",
+    });
+  }
+
+  try {
+    //check result task
+    const removeTaskResult = await task.removeSingleTaskOfUser(req.user.id, id);
+
+    //check if affectedRows row be 1
+    if (removeTaskResult.affectedRows === 1) {
+      //return response as removed successfully
+      return res.status(202).send({
+        message: "task removed successfully",
+      });
+    } else {
+      //there wasn't any row with this id
+      return res.status(400).send({
+        message: "there wasn't any task with this id",
+      });
+    }
+  } catch (error) {
+    //there was error while removing task of user
     return res.status(500).send({
       message:
         error.message || "Some error occurred while creating the Tutorial.",
@@ -88,4 +126,5 @@ async function GetAllTaskOfUser(req, res) {
 module.exports = {
   createNewTask,
   GetAllTaskOfUser,
+  RemoveSingleTask,
 };
