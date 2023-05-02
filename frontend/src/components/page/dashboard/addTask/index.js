@@ -1,5 +1,8 @@
 import React, { useState, useRef } from "react";
 
+//react router dom
+import { useNavigate } from "react-router-dom";
+
 //react toast
 import { toast } from "react-toastify";
 
@@ -19,6 +22,9 @@ const AddTask = () => {
   //ref
   const titleContainer = useRef();
 
+  //navigate
+  const navigate = useNavigate();
+
   const [isShowDescModal, setIsShowDescModal] = useState(false);
   const [description, setDescription] = useState("");
 
@@ -30,8 +36,11 @@ const AddTask = () => {
         description: description,
       });
 
+      //check response status
       if (response.status === 201) {
-        toast.success("task added successfully");
+        //data add successfully , reload to show result of changes
+        navigate(0);
+        // toast.success("task added successfully");
       } else {
         toast.error("adding task fails");
       }
