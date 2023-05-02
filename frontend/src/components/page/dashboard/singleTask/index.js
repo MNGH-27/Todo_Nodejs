@@ -6,9 +6,11 @@ import { ReactComponent as MoreIcon } from "./../../../../assets/svg/more.svg";
 
 //component
 import RemoveTaskModal from "../removeTaskModal";
+import EditTaskModal from "../editTaskModal";
 
 const SingleTask = ({ singleTask }) => {
   const [isShowRemoveModal, setIsShowRemoveModal] = useState(false);
+  const [isShowEditModal, setIsShowEditModal] = useState(false);
 
   return (
     <>
@@ -32,7 +34,10 @@ const SingleTask = ({ singleTask }) => {
           {singleTask.title}
         </span>
         <div className="flex items-center gap-1 text-transparent group-hover:text-[#F0F0F0]/40 duration-200 ml-auto">
-          <button className="hover:text-[#F0F0F0] duration-200">
+          <button
+            onClick={() => setIsShowEditModal(true)}
+            className="hover:text-[#F0F0F0] duration-200"
+          >
             <MoreIcon />
           </button>
           <button
@@ -48,6 +53,13 @@ const SingleTask = ({ singleTask }) => {
         <RemoveTaskModal
           data={singleTask}
           closeModalHandler={() => setIsShowRemoveModal(false)}
+        />
+      )}
+
+      {isShowEditModal && (
+        <EditTaskModal
+          data={singleTask}
+          closeModalHandler={() => setIsShowEditModal(false)}
         />
       )}
     </>
