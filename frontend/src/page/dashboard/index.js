@@ -22,15 +22,15 @@ export default function Dashboard() {
         <img className="w-full h-full" src={DashboardImage} alt="banner" />
       </div>
       <div className="relative flex items-center justify-center w-full z-10">
-        <div className="w-full max-w-2xl mt-12 mb-10 flex flex-col items-center justify-center">
-          <div className="w-full flex items-center justify-between text-white mb-10">
+        <div className="font-[Roboto] w-full max-w-2xl mt-12 mb-10 flex flex-col items-center justify-center">
+          <div className="font-[Salsa] w-full flex items-center justify-between text-white mb-10">
             <div className="flex items-center justify-start gap-1">
               <span>{user.data.firstName}</span>
               <span>{user.data.lastName}</span>
             </div>
             <span>{user.data.email}</span>
           </div>
-          <div className="w-full flex items-center justify-between text-white mb-12">
+          <div className="font-[Salsa] w-full flex items-center justify-between text-white mb-12">
             <span className="text-5xl font-semibold">TO DO</span>
             <SunSvg />
           </div>
@@ -40,7 +40,7 @@ export default function Dashboard() {
 
           <TaskList />
 
-          <div className="w-full shadow-xl bg-[#25273D] rounded-xl mb-8 ">
+          <div className="w-full shadow-xl bg-[#25273D] rounded-b-xl mb-8 ">
             <div className="flex items-center justify-between gap-3 text-[#5B5E7E] py-6 px-7">
               <button>5 items left</button>
               <div className="flex items-center justify-center gap-4">
