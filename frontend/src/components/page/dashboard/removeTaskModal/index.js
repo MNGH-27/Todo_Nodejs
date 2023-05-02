@@ -64,23 +64,13 @@ const RemoveTaskModal = ({ data, closeModalHandler }) => {
               {data.description}
             </span>
           </div>
-          <div className="w-full grid grid-cols-2 text-white">
-            <div className="flex flex-col items-center justify-center gap-1">
-              is done
-              <span
-                className={`w-4 h-4 border-2 ${
-                  data.is_complete ? "bg-white/50" : ""
-                }`}
-              ></span>
-            </div>
-            <div className="flex flex-col items-center justify-center gap-1">
-              is priority
-              <span
-                className={`w-4 h-4 border-2 ${
-                  data.is_priority ? "bg-white/50" : ""
-                }`}
-              ></span>
-            </div>
+          <div className="flex items-center justify-between text-white w-full gap-1">
+            is done
+            <span
+              className={`w-4 h-4 border-2 rounded-full ${
+                data.is_complete ? "bg-orange-500" : ""
+              }`}
+            ></span>
           </div>
         </div>
         <div className="flex items-center justify-between gap-3 mt-10">
