@@ -61,6 +61,27 @@ class Task {
       );
     });
   }
+
+  async editSingleTask(task_id, title, description, isComplete) {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "UPDATE todo SET title = ?, description = ?, is_complete = ? WHERE id = ?",
+        [title, description, isComplete, task_id],
+        (err, res) => {
+          console.log("come to this part");
+          //check if error while editing new task
+          if (err) {
+            console.log("error in edit task : ", err);
+            return reject(err);
+          }
+
+          //task edited successfully
+          console.log("edited task : ", { ...res });
+          return resolve({ ...res });
+        }
+      );
+    });
+  }
 }
 
 module.exports = Task;

@@ -20,5 +20,6 @@ taskRouter.post("/", taskController.createNewTask);
 taskRouter.get("/", taskController.GetAllTaskOfUser);
 
 taskRouter.delete("/:id", taskController.RemoveSingleTask);
+taskRouter.put("/:id", taskController.EditSingleTask);
 
 module.exports = taskRouter;
