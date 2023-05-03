@@ -3,6 +3,9 @@ import React, { useState } from "react";
 //react router dom
 import { useNavigate } from "react-router-dom";
 
+//service
+import { EditTask } from "../../../../service/task";
+
 //cookies
 import { useCookies } from "react-cookie";
 
@@ -20,6 +23,26 @@ const EditTaskModal = ({ data, closeModalHandler }) => {
 
   //navigate
   const navigate = useNavigate();
+
+  const httpEditTask = async () => {
+    try {
+      const response = await EditTask({
+        token: cookies.token,
+        taskId: data.id,
+        ...dataSchema,
+      });
+
+      //check resposne status
+      if (response.status === 200) {
+        //task changed successfully, reload page
+        navigate(0);
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log("error in editing task : ", error);
+    }
+  };
 
   const onChangeDataSchemaHandler = (target, value) => {
     setDataSchema((prevState) => ({
@@ -68,7 +91,7 @@ const EditTaskModal = ({ data, closeModalHandler }) => {
         </div>
         <div className="flex items-center justify-between gap-3">
           <button
-            // onClick={}
+            onClick={httpEditTask}
             className="bg-[#F97B22] text-white border-2 border-[#F97B22] hover:text-[#F97B22] hover:bg-transparent duration-200 px-6 py-2 rounded-md font-medium"
           >
             save change

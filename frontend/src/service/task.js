@@ -39,3 +39,27 @@ export async function RemoveSingleUserTask({ token, id }) {
 
   return apiCall;
 }
+
+export async function EditTask({
+  token,
+  taskId,
+  title,
+  description,
+  isComplete,
+}) {
+  const apiCall = await useFetch().put(
+    `${endPoint}/${taskId}`,
+    {
+      title,
+      description,
+      isComplete,
+    },
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  return apiCall;
+}
