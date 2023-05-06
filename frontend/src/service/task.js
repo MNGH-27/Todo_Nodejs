@@ -47,12 +47,21 @@ export async function EditTask({
   description,
   isComplete,
 }) {
+  //handle isCompelte input values
+  let isCompelte_Result = false;
+
+  //check if value of isComplete be 1
+  if (isComplete === 1) {
+    //value of isComplete is 1 => change value of isComplete_result to true
+    isCompelte_Result = true;
+  }
+
   const apiCall = await useFetch().put(
     `${endPoint}/${taskId}`,
     {
       title,
       description,
-      isComplete,
+      isComplete: isCompelte_Result,
     },
     {
       headers: {
