@@ -126,13 +126,11 @@ async function EditSingleTask(req, res) {
   console.log("come here");
 
   const taskSchema = Joi.object({
-    title: Joi.string().required().messages({
+    title: Joi.string().required().allow(null).messages({
       "string.base": `value must be string`,
-      "string.empty": `title can't be empty`,
-      "any.required": `title must be entered`,
     }),
     description: Joi.string().allow("").allow(null),
-    isComplete: Joi.boolean(),
+    isComplete: Joi.boolean().allow(null),
   });
 
   //validate sended values with Joi
