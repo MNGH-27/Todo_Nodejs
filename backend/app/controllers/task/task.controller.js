@@ -1,4 +1,3 @@
-const Jwt = require("jsonwebtoken");
 const Joi = require("joi");
 
 //models
@@ -6,6 +5,7 @@ const Task = require("../../models/task.model");
 
 //helper
 const filterList = require("./../../helpers/fieldFilter.helper");
+const pagination = require("./../../helpers/pagination.helper");
 
 async function createNewTask(req, res) {
   const taskSchema = Joi.object({
@@ -64,18 +64,35 @@ async function createNewTask(req, res) {
 async function GetAllTaskOfUser(req, res) {
   const task = new Task();
 
+  //destructure , get value of them from request query
+  const { page, rowsPerPage } = req.query;
+
   try {
     //check result task
-    const taskList = await task.getAllTaskOfUser(req.user.id);
+    const taskList = await pagination({
+      page,
+      tableName: "todo",
+      rowPerPage: rowsPerPage,
+      conditionArray: [
+        {
+          title: "user_id",
+          value: req.user.id,
+        },
+      ],
+    });
 
-    //filter list remove item => ("user_id")
-    const filteredTask = taskList.map((singleTask) => {
+    // const taskList = await task.getAllTaskOfUser(req.user.id);
+
+    //filter list of data to remove item => ("user_id")
+    const filteredTask = taskList.data.map((singleTask) => {
       // map on each single object of array to remove selected item
       return filterList(singleTask, ["user_id"], "remove");
     });
 
     //return result of get users task
-    return res.status(200).send({ data: [...filteredTask] });
+    return res
+      .status(200)
+      .send({ meta: { ...taskList.meta }, data: [...filteredTask] });
   } catch (error) {
     //there was error while finding taks of user
     return res.status(500).send({
