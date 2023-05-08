@@ -77,7 +77,7 @@ class Task {
     }
 
     //check if isComplete is seted
-    if (isComplete) {
+    if (isComplete !== null) {
       query += `is_complete=${isComplete} `;
     }
 
