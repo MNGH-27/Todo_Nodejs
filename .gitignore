@@ -3,3 +3,6 @@
 
 #ignore all node_modules file
 node_modules
+
+#ignore ToDo.md (this is local file)
+ToDo.md
