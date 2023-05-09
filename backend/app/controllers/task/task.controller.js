@@ -65,34 +65,45 @@ async function GetAllTaskOfUser(req, res) {
   const task = new Task();
 
   //destructure , get value of them from request query
-  const { page, rowsPerPage } = req.query;
+  // const { page, rowsPerPage } = req.query;
+
+  //destuct , get value for condition in get value of tasks
+  const { isComplete } = req.query;
 
   try {
     //check result task
-    const taskList = await pagination({
-      page,
-      tableName: "todo",
-      rowPerPage: rowsPerPage,
-      conditionArray: [
-        {
-          title: "user_id",
-          value: req.user.id,
-        },
-      ],
-    });
 
-    // const taskList = await task.getAllTaskOfUser(req.user.id);
+    /**
+     * ! we dont need pagination in this project it was just a simple test to learn pagination in node js
+     */
+    // const taskList = await pagination({
+    //   page,
+    //   tableName: "todo",
+    //   rowPerPage: rowsPerPage,
+    //   conditionArray: [
+    //     {
+    //       title: "user_id",
+    //       value: req.user.id,
+    //     },
+    //   ],
+    // });
+
+    const taskList = await task.getAllTaskOfUser(req.user.id, isComplete);
+    const taskCount = await task.getCountOfUserTasks(req.user.id, isComplete);
 
     //filter list of data to remove item => ("user_id")
-    const filteredTask = taskList.data.map((singleTask) => {
+    const filteredTask = taskList.map((singleTask) => {
       // map on each single object of array to remove selected item
       return filterList(singleTask, ["user_id"], "remove");
     });
 
     //return result of get users task
-    return res
-      .status(200)
-      .send({ meta: { ...taskList.meta }, data: [...filteredTask] });
+    return res.status(200).send({
+      meta: {
+        dataCount: taskCount[0].totalRows,
+      },
+      data: [...filteredTask],
+    });
   } catch (error) {
     //there was error while finding taks of user
     return res.status(500).send({
@@ -140,8 +151,6 @@ async function RemoveSingleTask(req, res) {
   }
 }
 async function EditSingleTask(req, res) {
-  console.log("come here");
-
   const taskSchema = Joi.object({
     title: Joi.string().required().allow(null).messages({
       "string.base": `value must be string`,
@@ -208,10 +217,31 @@ async function EditSingleTask(req, res) {
     });
   }
 }
+async function RemoveAllCompleteTask(req, res) {
+  const task = new Task();
+
+  console.log("come here");
+
+  try {
+    //check result task
+    const removeTaskResult = await task.removeAllCompletedTasks(req.user.id);
+
+    return res.status(200).send({
+      message: "tasks are removed successfully",
+    });
+  } catch (error) {
+    //there was error while removing task of user
+    return res.status(500).send({
+      message:
+        error.message || "Some error occurred while creating the Tutorial.",
+    });
+  }
+}
 
 module.exports = {
   createNewTask,
   GetAllTaskOfUser,
   RemoveSingleTask,
   EditSingleTask,
+  RemoveAllCompleteTask,
 };

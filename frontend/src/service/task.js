@@ -20,8 +20,8 @@ export async function PostNewTask({ token, title, description }) {
   return apiCall;
 }
 
-export async function GetSingleUserTasks({ token }) {
-  const apiCall = await useFetch().get(`${endPoint}`, {
+export async function GetSingleUserTasks({ token, filter }) {
+  const apiCall = await useFetch().get(`${endPoint}${filter}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
@@ -69,6 +69,16 @@ export async function EditTask({
       },
     }
   );
+
+  return apiCall;
+}
+
+export async function RemoveAllCompleteTask({ token }) {
+  const apiCall = await useFetch().delete(`${endPoint}/removeAllComplete`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   return apiCall;
 }

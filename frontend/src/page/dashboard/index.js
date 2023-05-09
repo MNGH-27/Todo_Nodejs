@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+
+//hooks
+import { useCustomSearchParams } from "../../hooks/useCustomSearchParams";
 
 //redux
 import { useSelector } from "react-redux";
@@ -6,6 +9,7 @@ import { useSelector } from "react-redux";
 //component
 import AddTask from "../../components/page/dashboard/addTask";
 import TaskList from "../../components/page/dashboard/taskList";
+import RemoveAllCompleteTaskModal from "../../components/page/dashboard/removeAllCompleteTaskModal";
 //svg
 import { ReactComponent as SunSvg } from "./../../assets/svg/sun.svg";
 
@@ -13,8 +17,31 @@ import { ReactComponent as SunSvg } from "./../../assets/svg/sun.svg";
 import DashboardImage from "./../../assets/image/dahsboardBanner.jpg";
 
 export default function Dashboard() {
+  const [searchParams, setSearchParams] = useCustomSearchParams();
+
   //get user form redux
   const user = useSelector((state) => state.user);
+
+  //data
+  const [meta, setMeta] = useState({});
+  const [isShowRemoveAllCompleteTask, setIsShowRemoveAllCompleteTask] =
+    useState(false);
+
+  const onSetSearchParamsHandler = (stage = undefined) => {
+    if (stage !== undefined) {
+      setSearchParams({
+        isComplete: stage,
+      });
+    } else {
+      setSearchParams({});
+    }
+  };
+
+  const onSetMetaHandler = (metaData) => {
+    setMeta({
+      ...metaData,
+    });
+  };
 
   return (
     <div className="">
@@ -38,21 +65,55 @@ export default function Dashboard() {
           <AddTask />
 
           {/* component show all task of user */}
-          <TaskList />
+          <TaskList setMeta={onSetMetaHandler} />
 
           <div className="w-full shadow-xl bg-[#25273D] rounded-b-xl mb-8 ">
             <div className="flex items-center justify-between gap-3 text-[#5B5E7E] py-6 px-7">
-              <button>5 items left</button>
+              <span>{meta.dataCount} items left</span>
               <div className="flex items-center justify-center gap-4">
-                <span className="text-[#3A7CFD]">All</span>
-                <span>Active</span>
-                <span>Completed</span>
+                <button
+                  onClick={() => onSetSearchParamsHandler()}
+                  className={`${
+                    !searchParams.isComplete
+                      ? "text-[#3A7CFD]"
+                      : "hover:text-[#254ea0]"
+                  } duration-200`}
+                >
+                  All
+                </button>
+                <button
+                  onClick={() => onSetSearchParamsHandler(false)}
+                  className={`${
+                    searchParams.isComplete === "false"
+                      ? "text-[#3A7CFD]"
+                      : "hover:text-[#254ea0]"
+                  } duration-200`}
+                >
+                  UnCompleted
+                </button>
+                <button
+                  onClick={() => onSetSearchParamsHandler(true)}
+                  className={`${
+                    searchParams.isComplete === "true"
+                      ? "text-[#3A7CFD]"
+                      : "hover:text-[#254ea0]"
+                  } duration-200`}
+                >
+                  Completed
+                </button>
               </div>
-              <button>Clear Completed</button>
+              <button onClick={() => setIsShowRemoveAllCompleteTask(true)}>
+                Clear Completed
+              </button>
             </div>
           </div>
         </div>
       </div>
+      {isShowRemoveAllCompleteTask && (
+        <RemoveAllCompleteTaskModal
+          closeModalHandler={() => setIsShowRemoveAllCompleteTask(false)}
+        />
+      )}
     </div>
   );
 }

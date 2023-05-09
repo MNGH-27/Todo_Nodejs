@@ -19,6 +19,9 @@ const taskRouter = express.Router();
 taskRouter.post("/", taskController.createNewTask);
 taskRouter.get("/", taskController.GetAllTaskOfUser);
 
+//remove all completed tasks
+taskRouter.delete("/removeAllComplete", taskController.RemoveAllCompleteTask);
+
 taskRouter.delete("/:id", taskController.RemoveSingleTask);
 taskRouter.put("/:id", taskController.EditSingleTask);
 

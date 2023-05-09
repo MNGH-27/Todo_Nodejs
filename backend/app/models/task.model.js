@@ -22,10 +22,44 @@ class Task {
     });
   }
 
-  async getAllTaskOfUser(user_id) {
+  async getAllTaskOfUser(user_id, isComplete) {
+    let condition = "";
+
+    //check if isComplete is passed
+    if (isComplete !== undefined) {
+      condition = `AND is_complete = ${isComplete}`;
+    }
+
     return new Promise((resolve, reject) => {
       db.query(
-        "SELECT * FROM todo WHERE user_id = ? ",
+        `SELECT * FROM todo WHERE user_id = ? ${condition}`,
+        [user_id],
+        (err, res) => {
+          //check if error in saving data in mySql
+          if (err) {
+            console.log("error: ", err);
+            return reject(err);
+          }
+
+          //there is no any error in saving data in mySql
+          console.log("created tutorial: ", [...res]);
+          resolve([...res]);
+        }
+      );
+    });
+  }
+
+  async getCountOfUserTasks(user_id, isComplete) {
+    let condition = "";
+
+    //check if isComplete is passed
+    if (isComplete !== undefined) {
+      condition = `AND is_complete = ${isComplete}`;
+    }
+
+    return new Promise((resolve, reject) => {
+      db.query(
+        `SELECT COUNT(*) AS totalRows FROM todo WHERE user_id = ? ${condition}`,
         [user_id],
         (err, res) => {
           //check if error in saving data in mySql
@@ -47,6 +81,26 @@ class Task {
       db.query(
         "DELETE FROM todo WHERE user_id = ? AND id = ? ",
         [user_id, task_id],
+        (err, res) => {
+          //check if error while removing single task
+          if (err) {
+            console.log("error in delete task : ", err);
+            return reject(err);
+          }
+
+          //task deleted successfully
+          console.log("deleted task : ", { ...res });
+          resolve({ ...res });
+        }
+      );
+    });
+  }
+
+  async removeAllCompletedTasks(user_id) {
+    return new Promise((resolve, reject) => {
+      db.query(
+        "DELETE FROM todo WHERE is_complete=1 AND user_id = ?",
+        [user_id],
         (err, res) => {
           //check if error while removing single task
           if (err) {
