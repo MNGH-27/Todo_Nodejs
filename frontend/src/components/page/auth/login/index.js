@@ -41,7 +41,7 @@ export default function Login() {
       //check response status
       if (response.status === 201) {
         //user login successfully
-        toast.success("با موفقیت وارد شدید");
+        toast.success("login successfully");
         //add token to cookies
         setCookies("token", response.data.token);
 
@@ -49,7 +49,7 @@ export default function Login() {
         navigate("/dashboard");
       } else {
         //warn that we have error
-        toast.error("ورود ناموفق بود");
+        toast.error("login failed");
 
         //add error to input elements
         setError({
@@ -88,24 +88,14 @@ export default function Login() {
         title="password"
         placeholder="enter your password here"
       />
-      <div className="flex items-center justify-between w-full mb-3">
-        <label className="flex items-center justify-center gap-2">
-          <input type="checkbox" />
-          Remember me
-        </label>
-        <button>forget password</button>
-      </div>
+
       <button
         onClick={httpLoginUser}
-        className="w-full bg-[#04C35C] text-white hover:text-[#04C35C] hover:bg-white border-2 border-[#04C35C] duration-200 rounded-md text-lg py-3"
+        className="my-3 w-full bg-[#04C35C] text-white hover:text-[#04C35C] hover:bg-white border-2 border-[#04C35C] duration-200 rounded-md text-lg py-3"
       >
         Login Now
       </button>
 
-      <button className="flex items-center justify-center gap-2 w-full bg-gray-800 text-white hover:text-gray-800 hover:bg-white border-2 border-gray-800 duration-200 rounded-md text-lg py-3">
-        <Google className="w-10" />
-        or sign-in with google
-      </button>
       <div className="text-sm">
         Dont have an account{" "}
         <Link to={"/?status=signup"} className="text-blue-700">

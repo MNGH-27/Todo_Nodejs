@@ -39,7 +39,7 @@ export default function Signup() {
       //check response status
       if (response.status === 201) {
         //user login successfully
-        toast.success("با موفقیت وارد شدید");
+        toast.success("SignUp Successfully");
         //add token to cookies
         setCookies("token", response.data.token);
 
@@ -47,7 +47,7 @@ export default function Signup() {
         navigate("/dashboard");
       } else {
         //warn that we have error
-        toast.error("ورود ناموفق بود");
+        toast.error("login failed");
 
         //add error to input elements
         setError({
@@ -106,13 +106,9 @@ export default function Signup() {
 
       <button
         onClick={createNewUserHttp}
-        className="mt-3 w-full bg-[#04C35C] text-white hover:text-[#04C35C] hover:bg-white border-2 border-[#04C35C] duration-200 rounded-md text-md py-2"
+        className="my-3 w-full bg-[#04C35C] text-white hover:text-[#04C35C] hover:bg-white border-2 border-[#04C35C] duration-200 rounded-md text-md py-2"
       >
         signup Now
-      </button>
-      <button className="mb-3 flex items-center justify-center gap-2 w-full bg-gray-800 text-white hover:text-gray-800 hover:bg-white border-2 border-gray-800 duration-200 rounded-md text-md py-2">
-        <Google className="w-7" />
-        or log-in with google
       </button>
 
       <div className="text-sm">

@@ -27,6 +27,8 @@ const AxiosInstance = () => {
       //check status code with backend if user has token
       else if (error.response.status === 401) {
         return error.response;
+      } else if (error.response.status === 403) {
+        window.location.href = window.location.origin;
       }
 
       return error.response;

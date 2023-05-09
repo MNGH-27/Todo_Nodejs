@@ -10,6 +10,8 @@ import Auth from "./page/auth";
 
 import Dashboard from "./page/dashboard";
 
+import NotFoundPage from "./page/404";
+
 export default function App() {
   const { pathname } = useLocation();
 
@@ -24,6 +26,7 @@ export default function App() {
         <Route element={<Layout />}>
           <Route element={<Auth />} path="/" />
           <Route element={<Dashboard />} path="/dashboard" />
+          <Route element={<NotFoundPage />} path="/*" />
         </Route>
       </Routes>
     </>

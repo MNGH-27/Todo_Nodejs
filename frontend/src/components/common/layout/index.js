@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { useCookies } from "react-cookie";
 
 //react router dom
-import { Outlet } from "react-router-dom";
+import { Outlet, Location, useLocation } from "react-router-dom";
 
 //react toastify
 import { ToastContainer, toast } from "react-toastify";
@@ -18,6 +18,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { addData, startLoading, stopLoading } from "../../../slice/userSlice";
 
 export default function Layout() {
+  //location
+  const location = useLocation();
+
   //initial redux objects => dispatch , selector
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
@@ -26,8 +29,10 @@ export default function Layout() {
   const [cookies] = useCookies(["token"]);
 
   useEffect(() => {
-    httpGetUserData();
-  }, []);
+    if (location.pathname !== "/") {
+      httpGetUserData();
+    }
+  }, [location]);
 
   const httpGetUserData = async () => {
     dispatch(startLoading());
