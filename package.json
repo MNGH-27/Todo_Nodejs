@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/MNGH-27/Todo_Nodejs_Remixjs/issues"
   },
-  "homepage": "https://github.com/MNGH-27/Todo_Nodejs_Remixjs#readme"
+  "homepage": "https://github.com/MNGH-27/Todo_Nodejs_Remixjs#readme",
+  "dependencies": {
+    "helmet": "^7.0.0"
+  }
 }

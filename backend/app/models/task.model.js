@@ -59,7 +59,7 @@ class Task {
 
     return new Promise((resolve, reject) => {
       db.query(
-        `SELECT COUNT(*) AS totalRows FROM todo WHERE user_id = ? ${condition}`,
+        `SELECT COUNT(*) AS totalRows FROM todo WHERE user_id = ? | 0 = 0`,
         [user_id],
         (err, res) => {
           //check if error in saving data in mySql
